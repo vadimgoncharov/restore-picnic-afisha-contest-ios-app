@@ -61,6 +61,11 @@ class EditPlayerTableViewController: UITableViewController, UIImagePickerControl
     dismiss(animated: true, completion: nil)
   }
   
+  
+  override var prefersStatusBarHidden: Bool {
+    return true
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     

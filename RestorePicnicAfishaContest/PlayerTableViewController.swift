@@ -45,6 +45,10 @@ class PlayerTableViewController: UITableViewController, NSFetchedResultsControll
       }
     }
   
+  override var prefersStatusBarHidden: Bool {
+    return true
+  }
+  
   func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
     print("begin")
     tableView.beginUpdates()

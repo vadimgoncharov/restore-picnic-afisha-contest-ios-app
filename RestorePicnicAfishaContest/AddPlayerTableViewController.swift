@@ -69,6 +69,10 @@ class AddPlayerTableViewController: UITableViewController, UIImagePickerControll
     dismiss(animated: true, completion: nil)
   }
   
+  override var prefersStatusBarHidden: Bool {
+    return true
+  }
+  
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -77,6 +81,10 @@ class AddPlayerTableViewController: UITableViewController, UIImagePickerControll
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+      nameTextField.text = nil
+      scoreTextField.text = nil
+      sessionTextField.text = nil
+      avatarImageView.image = nil
     }
 
     override func didReceiveMemoryWarning() {
