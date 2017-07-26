@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -57,6 +58,7 @@
                                     <outlet property="nameLabel" destination="Qud-kY-RnD" id="Ybn-qE-1JW"/>
                                     <outlet property="scoreLabel" destination="Sb7-Qx-x28" id="lNc-b3-IDP"/>
                                     <outlet property="sessionLabel" destination="xsy-BX-LMl" id="mHV-tN-gF4"/>
+                                    <segue destination="cUA-tX-7Ec" kind="show" identifier="showEditPlayer" id="Lwg-vH-GX2"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -66,16 +68,6 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="JZu-RC-Lt5">
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="rpz-aU-SkO">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="cdG-wn-DVy">
-                                <rect key="frame" x="16" y="7" width="83" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="didClickReloadButtonWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jfo-Lx-zrB"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="dtN-FZ-d6m">
                             <connections>
                                 <segue destination="BdG-Bg-S55" kind="presentation" id="LNg-Re-5uU"/>
@@ -86,6 +78,157 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="975.20000000000005" y="38.23088455772114"/>
+        </scene>
+        <!--Edit Player Table View Controller-->
+        <scene sceneID="UIG-Wm-4eh">
+            <objects>
+                <tableViewController id="cUA-tX-7Ec" userLabel="Edit Player Table View Controller" customClass="EditPlayerTableViewController" customModule="RestorePicnicAfishaContest" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="5TM-yI-ozo">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <sections>
+                            <tableViewSection id="zjb-pj-P76">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="72" id="5Fv-Zl-Neb">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5Fv-Zl-Neb" id="NJD-ag-3FH">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2PK-Ir-2iE">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="72" id="x7N-a8-sXY">
+                                        <rect key="frame" x="0.0" y="72" width="375" height="72"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="x7N-a8-sXY" id="tXX-Ui-svk">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Имя и фамилия" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zfX-2h-jxH">
+                                                    <rect key="frame" x="18" y="8" width="349" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Имя и фамиля участника" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pn7-0D-PeP">
+                                                    <rect key="frame" x="18" y="33" width="349" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
+                                                </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="72" id="anT-gu-8Tt">
+                                        <rect key="frame" x="0.0" y="144" width="375" height="72"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="anT-gu-8Tt" id="MOf-YP-Y3f">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Очки" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mCD-RK-7Zt">
+                                                    <rect key="frame" x="18" y="8" width="349" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Количество набранных очков" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VH5-FC-L3k">
+                                                    <rect key="frame" x="18" y="33" width="349" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="72" id="9OA-01-ldM">
+                                        <rect key="frame" x="0.0" y="216" width="375" height="72"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9OA-01-ldM" id="hmN-wL-vd8">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Номер игровой сессии" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cmf-H2-Lna">
+                                                    <rect key="frame" x="18" y="8" width="349" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Номер игровой сессии" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UFM-bT-soy">
+                                                    <rect key="frame" x="18" y="33" width="349" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="72" id="xf7-Ov-r7q">
+                                        <rect key="frame" x="0.0" y="288" width="375" height="72"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xf7-Ov-r7q" id="Xxz-6m-hLm">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vSy-VX-yRO">
+                                                    <rect key="frame" x="8" y="8" width="359" height="55.5"/>
+                                                    <state key="normal" title="Удалить участника"/>
+                                                    <connections>
+                                                        <action selector="didClickRemoveButtonWithSender:" destination="cUA-tX-7Ec" eventType="touchDown" id="HMm-i4-5FM"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="vSy-VX-yRO" firstAttribute="top" secondItem="Xxz-6m-hLm" secondAttribute="topMargin" id="AIh-Kx-ebp"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="vSy-VX-yRO" secondAttribute="trailing" id="I9r-AG-w84"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="vSy-VX-yRO" secondAttribute="bottom" id="Z0C-sr-ST9"/>
+                                                <constraint firstItem="vSy-VX-yRO" firstAttribute="leading" secondItem="Xxz-6m-hLm" secondAttribute="leadingMargin" id="dTX-tY-KSl"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="cUA-tX-7Ec" id="5dR-2D-xAe"/>
+                            <outlet property="delegate" destination="cUA-tX-7Ec" id="kwD-QI-Uvi"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Участник" id="Okb-Af-EJU">
+                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="cancel" id="M2P-d0-ARJ">
+                            <connections>
+                                <action selector="didClickCancelButtonWithSender:" destination="cUA-tX-7Ec" id="YZJ-bL-Kc0"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="jYN-gN-8Cd">
+                            <connections>
+                                <action selector="didClickSaveButtonWithSender:" destination="cUA-tX-7Ec" id="3hA-7D-dAa"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="avatarImageView" destination="2PK-Ir-2iE" id="tDR-Q2-gjk"/>
+                        <outlet property="nameTextField" destination="Pn7-0D-PeP" id="QQk-J8-BES"/>
+                        <outlet property="scoreTextField" destination="VH5-FC-L3k" id="DNM-HK-VIm"/>
+                        <outlet property="sessionTextField" destination="UFM-bT-soy" id="M3C-rN-qgq"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8Tt-Td-X7s" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1840.8" y="36.431784107946029"/>
         </scene>
         <!--Add Player Table View Controller-->
         <scene sceneID="GpN-hf-xIs">

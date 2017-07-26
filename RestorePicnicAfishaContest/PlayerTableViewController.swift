@@ -15,33 +15,6 @@ class PlayerTableViewController: UITableViewController, NSFetchedResultsControll
     @IBAction func unwindToHomeScreen(segue:UIStoryboardSegue) {
     
     }
-  @IBAction func didClickReloadButton(withSender sender: AnyObject) {
-    print("click")
-    
-    let fetchRequest: NSFetchRequest<PlayerMO> = PlayerMO.fetchRequest()
-    let sortDescriptor = NSSortDescriptor(key: "id", ascending: false)
-    fetchRequest.sortDescriptors = [sortDescriptor]
-    
-    if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
-      let context = appDelegate.persistentContainer.viewContext
-      fetchResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-      
-      fetchResultController.delegate = self
-      
-      do {
-        try fetchResultController.performFetch()
-        if let fetchedObjects = fetchResultController.fetchedObjects {
-          players = fetchedObjects
-          for player in players {
-            print(player.id)
-            print(player.name)
-          }
-        }
-      } catch {
-        print(error)
-      }
-    }
-  }
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -139,6 +112,16 @@ class PlayerTableViewController: UITableViewController, NSFetchedResultsControll
     cell.sessionLabel?.text = String(players[indexRowId].session)
     
     return cell
+  }
+  
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if segue.identifier == "showEditPlayer" {
+      if let indexPath = tableView.indexPathForSelectedRow {
+        let destinationController = segue.destination as! EditPlayerTableViewController
+        let rowIndex = indexPath.row
+        destinationController.player = players[rowIndex]
+      }
+    }
   }
 
     /*
