@@ -46,8 +46,6 @@ class EditPlayerTableViewController: UITableViewController, UIImagePickerControl
       player.name = nameTextField.text
       player.score = score != nil ? score! : 0
       player.session = session != nil ? session! : 0
-      player.id = Int64(Date().timeIntervalSinceNow)
-      
       
       if let avatar = avatarImageView.image {
         if let imageData = UIImagePNGRepresentation(avatar) {

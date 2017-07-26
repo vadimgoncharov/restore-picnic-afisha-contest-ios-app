@@ -20,13 +20,34 @@ class AddPlayerTableViewController: UITableViewController, UIImagePickerControll
   @IBAction func didClickSaveButton(withSender sender: AnyObject) {
     
     if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
+      let context = appDelegate.persistentContainer.viewContext
+      var maxId = 0
+      
+      let fetchRequest: NSFetchRequest<PlayerMO> = PlayerMO.fetchRequest()
+      let sortDescriptor = NSSortDescriptor(key: "id", ascending: true)
+      fetchRequest.sortDescriptors = [sortDescriptor]
+      
+      let fetchResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+      
+      
+      do {
+        try fetchResultController.performFetch()
+        if let fetchedObjects = fetchResultController.fetchedObjects {
+          for player in fetchedObjects {
+            maxId = max(Int(player.id), maxId)
+          }
+        }
+      } catch {
+        print(error)
+      }
+      
       let score = Int16(scoreTextField.text!)
       let session = Int16(sessionTextField.text!)
-      player = PlayerMO(context: appDelegate.persistentContainer.viewContext)
+      player = PlayerMO(context: context)
       player.name = nameTextField.text
       player.score = score != nil ? score! : 0
       player.session = session != nil ? session! : 0
-      player.id = Int64(Date().timeIntervalSinceNow)
+      player.id = Int16(maxId + 1)
       
       
       if let avatar = avatarImageView.image {
@@ -34,6 +55,12 @@ class AddPlayerTableViewController: UITableViewController, UIImagePickerControll
           player.image = NSData(data: imageData)
         }
       }
+      
+      nameTextField.text = nil
+      scoreTextField.text = nil
+      sessionTextField.text = nil
+      avatarImageView.image = nil
+      
       
       print("Saving data to context ...")
       appDelegate.saveContext()

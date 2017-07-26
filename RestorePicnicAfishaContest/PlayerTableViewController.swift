@@ -109,7 +109,7 @@ class PlayerTableViewController: UITableViewController, NSFetchedResultsControll
       cell.avatarImageView.image = UIImage(data: playerAvatar as Data)
     }
     cell.scoreLabel?.text = String(players[indexRowId].score)
-    cell.sessionLabel?.text = String(players[indexRowId].session)
+    cell.sessionLabel?.text = String(players[indexRowId].id)
     
     return cell
   }
