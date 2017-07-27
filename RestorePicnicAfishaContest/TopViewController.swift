@@ -19,34 +19,63 @@ class TopViewController: UIViewController, UICollectionViewDataSource, UICollect
   }
   
   var players:[PlayerMO] = []
+  var settings:[SettingsMO] = []
   
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-      var fetchResultController: NSFetchedResultsController<PlayerMO>!
-      let fetchRequest: NSFetchRequest<PlayerMO> = PlayerMO.fetchRequest()
-      let sortDescriptor = NSSortDescriptor(key: "score", ascending: false)
-      fetchRequest.sortDescriptors = [sortDescriptor]
-      
-      if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
-        let context = appDelegate.persistentContainer.viewContext
-        fetchResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-        
-//        fetchResultController.delegate = self
-        
-        do {
-          try fetchResultController.performFetch()
-          if let fetchedObjects = fetchResultController.fetchedObjects {
-            players = fetchedObjects
-          }
-        } catch {
-          print(error)
-        }
-      }
+      loadSettings()
+      loadPlayers()
 
     }
 
+  func loadPlayers() {
+    let fetchRequest: NSFetchRequest<PlayerMO> = PlayerMO.fetchRequest()
+    let sortDescriptor = NSSortDescriptor(key: "id", ascending: false)
+    fetchRequest.sortDescriptors = [sortDescriptor]
+    
+    if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
+      let context = appDelegate.persistentContainer.viewContext
+      let fetchResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+      
+      
+      do {
+        try fetchResultController.performFetch()
+        if let fetchedObjects = fetchResultController.fetchedObjects {
+          players = fetchedObjects.filter(isAtActiveSession)
+        }
+      } catch {
+        print(error)
+      }
+    }
+  }
+  
+  func loadSettings() {
+    let fetchRequest: NSFetchRequest<SettingsMO> = SettingsMO.fetchRequest()
+    let sortDescriptor = NSSortDescriptor(key: "session", ascending: false)
+    fetchRequest.sortDescriptors = [sortDescriptor]
+    
+    if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
+      let context = appDelegate.persistentContainer.viewContext
+      let fetchResultControllerSettings = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+      
+      
+      do {
+        try fetchResultControllerSettings.performFetch()
+        if let fetchedObjects = fetchResultControllerSettings.fetchedObjects {
+          settings = fetchedObjects
+        }
+      } catch {
+        print(error)
+      }
+    }
+  }
+  
+  func isAtActiveSession(player: PlayerMO) -> Bool {
+    return player.session == settings[0].session
+  }
+  
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

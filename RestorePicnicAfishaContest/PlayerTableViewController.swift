@@ -26,8 +26,9 @@ class PlayerTableViewController: UITableViewController, NSFetchedResultsControll
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        loadPlayers()
         loadSettings()
+        loadPlayers()
+      
      
     }
   
@@ -62,7 +63,7 @@ class PlayerTableViewController: UITableViewController, NSFetchedResultsControll
       let context = appDelegate.persistentContainer.viewContext
       fetchResultControllerSettings = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
       
-//      fetchResultControllerSettings.delegate = self
+      fetchResultControllerSettings.delegate = self
       
       do {
         try fetchResultControllerSettings.performFetch()
@@ -86,12 +87,18 @@ class PlayerTableViewController: UITableViewController, NSFetchedResultsControll
     return true
   }
   
+  
   func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
     print("begin")
     tableView.beginUpdates()
   }
   
   func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+  
+    if (controller == fetchResultControllerSettings) {
+      tableView.reloadData()
+      return
+    }
     
     print("didchange")
     switch type {
@@ -111,10 +118,13 @@ class PlayerTableViewController: UITableViewController, NSFetchedResultsControll
       tableView.reloadData()
     }
     
-    if let fetchedObjects = controller.fetchedObjects {
-      players = fetchedObjects as! [PlayerMO]
+    if (controller == fetchResultController) {
+      if let fetchedObjects = controller.fetchedObjects {
+        players = fetchedObjects as! [PlayerMO]
+      }
     }
   }
+  
   
   func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
     print("end")
@@ -133,9 +143,11 @@ class PlayerTableViewController: UITableViewController, NSFetchedResultsControll
         return 1
     }
 
+  
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return players.count
+      
+      return players.count
     }
 
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -150,8 +162,12 @@ class PlayerTableViewController: UITableViewController, NSFetchedResultsControll
       cell.avatarImageView.image = UIImage(data: playerAvatar as Data)
     }
     cell.scoreLabel?.text = String(players[indexRowId].score)
-    cell.sessionLabel?.text = String(players[indexRowId].id)
-    
+    let session = players[indexRowId].session
+    if (session != settings[0].session) {
+      cell.sessionLabel?.text = String(session)
+    } else {
+      cell.sessionLabel?.text = ""
+    }
     return cell
   }
   
