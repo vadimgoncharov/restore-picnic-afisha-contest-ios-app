@@ -41,13 +41,13 @@ class AddPlayerTableViewController: UITableViewController, UIImagePickerControll
         print(error)
       }
       
-      let score = Int16(scoreTextField.text!)
-      let session = Int16(sessionTextField.text!)
+      let score = Int64(scoreTextField.text!)
+      let session = Int32(sessionTextField.text!)
       player = PlayerMO(context: context)
       player.name = nameTextField.text
       player.score = score != nil ? score! : 0
       player.session = session != nil ? session! : 0
-      player.id = Int16(maxId + 1)
+      player.id = Int32(maxId + 1)
       
       
       if let avatar = avatarImageView.image {
@@ -81,10 +81,37 @@ class AddPlayerTableViewController: UITableViewController, UIImagePickerControll
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+      
+      
       nameTextField.text = nil
       scoreTextField.text = nil
       sessionTextField.text = nil
       avatarImageView.image = nil
+      
+      let fetchResultController: NSFetchedResultsController<SettingsMO>!
+      
+      let fetchRequest: NSFetchRequest<SettingsMO> = SettingsMO.fetchRequest()
+      let sortDescriptor = NSSortDescriptor(key: "session", ascending: false)
+      fetchRequest.sortDescriptors = [sortDescriptor]
+      
+      if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
+        let context = appDelegate.persistentContainer.viewContext
+        fetchResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        
+        do {
+          try fetchResultController.performFetch()
+          if let fetchedObjects = fetchResultController.fetchedObjects {
+            let settings = fetchedObjects[0]
+            sessionTextField.text = String(settings.session)
+           
+          }
+        } catch {
+          print(error)
+        }
+      }
+      
+      nameTextField.becomeFirstResponder()
+    
     }
 
     override func didReceiveMemoryWarning() {
@@ -109,23 +136,23 @@ class AddPlayerTableViewController: UITableViewController, UIImagePickerControll
   
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
     
-    if let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+    if let selectedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
       avatarImageView.image = selectedImage
-      avatarImageView.contentMode = .scaleAspectFill
-      avatarImageView.clipsToBounds = true
+//      avatarImageView.contentMode = .scaleAspectFill
+//      avatarImageView.clipsToBounds = true
     }
     
-    let leadingConstraint = NSLayoutConstraint(item: avatarImageView, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: avatarImageView.superview, attribute: NSLayoutAttribute.leading, multiplier: 1, constant: 0)
-    leadingConstraint.isActive = true
-    
-    let trailingConstraint = NSLayoutConstraint(item: avatarImageView, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: avatarImageView.superview, attribute: NSLayoutAttribute.trailing, multiplier: 1, constant: 0)
-    trailingConstraint.isActive = true
-    
-    let topConstraint = NSLayoutConstraint(item: avatarImageView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: avatarImageView.superview, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
-    topConstraint.isActive = true
-    
-    let bottomConstraint = NSLayoutConstraint(item: avatarImageView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: avatarImageView.superview, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
-    bottomConstraint.isActive = true
+//    let leadingConstraint = NSLayoutConstraint(item: avatarImageView, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: avatarImageView.superview, attribute: NSLayoutAttribute.leading, multiplier: 1, constant: 0)
+//    leadingConstraint.isActive = true
+//    
+//    let trailingConstraint = NSLayoutConstraint(item: avatarImageView, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: avatarImageView.superview, attribute: NSLayoutAttribute.trailing, multiplier: 1, constant: 0)
+//    trailingConstraint.isActive = true
+//    
+//    let topConstraint = NSLayoutConstraint(item: avatarImageView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: avatarImageView.superview, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
+//    topConstraint.isActive = true
+//    
+//    let bottomConstraint = NSLayoutConstraint(item: avatarImageView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: avatarImageView.superview, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
+//    bottomConstraint.isActive = true
     
     
     dismiss(animated: true, completion: nil)

@@ -150,6 +150,21 @@ class PlayerTableViewController: UITableViewController, NSFetchedResultsControll
       return players.count
     }
 
+  func pluralForm(number: Int64, forms: [String]) -> String {
+    let formatter = NumberFormatter()
+    formatter.numberStyle = .decimal
+    formatter.locale = Locale(identifier: "FR_fr")
+    let formattedNumber = formatter.string(for: number) ?? "0"
+    
+    let str = number % 10 == 1 && number % 100 != 11 ? forms[0] :
+      (number % 10 >= 2 && number % 10 <= 4 && (number % 100 < 10 || number % 100 >= 20) ? forms[1] : forms[2])
+    return "\(formattedNumber) \(str)"
+  }
+  
+  
+  var pluarFormsScore = ["очко", "очка", "очков"];
+  
+  
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
     let cellIdentifier = "Cell"
@@ -161,12 +176,15 @@ class PlayerTableViewController: UITableViewController, NSFetchedResultsControll
     if let playerAvatar = players[indexPath.row].image {
       cell.avatarImageView.image = UIImage(data: playerAvatar as Data)
     }
-    cell.scoreLabel?.text = String(players[indexRowId].score)
+    else {
+      cell.avatarImageView.image = nil
+    }
+    cell.scoreLabel?.text = pluralForm(number: players[indexRowId].score, forms: pluarFormsScore)
     let session = players[indexRowId].session
     if (session != settings[0].session) {
-      cell.sessionLabel?.text = String(session)
+      cell.sessionLabel?.text = "Неактивная сессия: \(session)"
     } else {
-      cell.sessionLabel?.text = ""
+      cell.sessionLabel?.text = "Активная сессия: \(session)"
     }
     return cell
   }

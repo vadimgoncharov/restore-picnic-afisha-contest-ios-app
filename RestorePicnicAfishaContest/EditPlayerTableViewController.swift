@@ -28,8 +28,8 @@ class EditPlayerTableViewController: UITableViewController, UIImagePickerControl
   @IBAction func didClickSaveButton(withSender sender: AnyObject) {
     print("click save")
     if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
-      let score = Int16(scoreTextField.text!)
-      let session = Int16(sessionTextField.text!)
+      let score = Int64(scoreTextField.text!)
+      let session = Int32(sessionTextField.text!)
 //      player = PlayerMO(context: appDelegate.persistentContainer.viewContext)
       player.name = nameTextField.text
       player.score = score != nil ? score! : 0
@@ -67,8 +67,8 @@ class EditPlayerTableViewController: UITableViewController, UIImagePickerControl
       nameTextField.text = name
     }
     
-    scoreTextField.text = String(Int16(player.score))
-    sessionTextField.text = String(Int16(player.session))
+    scoreTextField.text = String(Int64(player.score))
+    sessionTextField.text = String(Int32(player.session))
     
     if let playerAvatar = player.image {
       avatarImageView.image = UIImage(data: playerAvatar as Data)
@@ -101,23 +101,23 @@ class EditPlayerTableViewController: UITableViewController, UIImagePickerControl
   
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
     
-    if let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+    if let selectedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
       avatarImageView.image = selectedImage
-      avatarImageView.contentMode = .scaleAspectFill
-      avatarImageView.clipsToBounds = true
+//      avatarImageView.contentMode = .scaleAspectFill
+//      avatarImageView.clipsToBounds = true
     }
     
-    let leadingConstraint = NSLayoutConstraint(item: avatarImageView, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: avatarImageView.superview, attribute: NSLayoutAttribute.leading, multiplier: 1, constant: 0)
-    leadingConstraint.isActive = true
-    
-    let trailingConstraint = NSLayoutConstraint(item: avatarImageView, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: avatarImageView.superview, attribute: NSLayoutAttribute.trailing, multiplier: 1, constant: 0)
-    trailingConstraint.isActive = true
-    
-    let topConstraint = NSLayoutConstraint(item: avatarImageView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: avatarImageView.superview, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
-    topConstraint.isActive = true
-    
-    let bottomConstraint = NSLayoutConstraint(item: avatarImageView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: avatarImageView.superview, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
-    bottomConstraint.isActive = true
+//    let leadingConstraint = NSLayoutConstraint(item: avatarImageView, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: avatarImageView.superview, attribute: NSLayoutAttribute.leading, multiplier: 1, constant: 0)
+//    leadingConstraint.isActive = true
+//    
+//    let trailingConstraint = NSLayoutConstraint(item: avatarImageView, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: avatarImageView.superview, attribute: NSLayoutAttribute.trailing, multiplier: 1, constant: 0)
+//    trailingConstraint.isActive = true
+//    
+//    let topConstraint = NSLayoutConstraint(item: avatarImageView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: avatarImageView.superview, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
+//    topConstraint.isActive = true
+//    
+//    let bottomConstraint = NSLayoutConstraint(item: avatarImageView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: avatarImageView.superview, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
+//    bottomConstraint.isActive = true
     
     
     dismiss(animated: true, completion: nil)

@@ -18,6 +18,26 @@ class TopViewController: UIViewController, UICollectionViewDataSource, UICollect
     dismiss(animated: true, completion: nil)
   }
   
+  @IBOutlet var player1View: UIView!
+  @IBOutlet var player1name: UILabel!
+  @IBOutlet var player1score: UILabel!
+  @IBOutlet var player1avatar: UIImageView!
+  
+  
+  @IBOutlet var player2View: UIView!
+  @IBOutlet var player2name: UILabel!
+  @IBOutlet var player2score: UILabel!
+  @IBOutlet var player2avatar: UIImageView!
+  
+  
+  @IBOutlet var player3View: UIView!
+  @IBOutlet var player3name: UILabel!
+  @IBOutlet var player3score: UILabel!
+  @IBOutlet var player3avatar: UIImageView!
+  
+  @IBOutlet var top3View: UIView!
+  @IBOutlet var restPlayersView: UICollectionView!
+  
   var players:[PlayerMO] = []
   var settings:[SettingsMO] = []
   
@@ -27,12 +47,14 @@ class TopViewController: UIViewController, UICollectionViewDataSource, UICollect
         // Do any additional setup after loading the view.
       loadSettings()
       loadPlayers()
+      setTop3PlayersValues()
+      toggleTop3PlayersVisibility()
 
     }
 
   func loadPlayers() {
     let fetchRequest: NSFetchRequest<PlayerMO> = PlayerMO.fetchRequest()
-    let sortDescriptor = NSSortDescriptor(key: "id", ascending: false)
+    let sortDescriptor = NSSortDescriptor(key: "score", ascending: false)
     fetchRequest.sortDescriptors = [sortDescriptor]
     
     if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
@@ -81,6 +103,78 @@ class TopViewController: UIViewController, UICollectionViewDataSource, UICollect
         // Dispose of any resources that can be recreated.
     }
   
+  /*
+   pluralForm(28, forms: ["год", "года", "лет"])
+   output: "лет"
+   */
+  func pluralForm(number: Int64, forms: [String]) -> String {
+    let formatter = NumberFormatter()
+    formatter.numberStyle = .decimal
+    formatter.locale = Locale(identifier: "FR_fr")
+    let formattedNumber = formatter.string(for: number) ?? "0"
+    
+    let str = number % 10 == 1 && number % 100 != 11 ? forms[0] :
+      (number % 10 >= 2 && number % 10 <= 4 && (number % 100 < 10 || number % 100 >= 20) ? forms[1] : forms[2])
+    return "\(formattedNumber) \(str)"
+  }
+  
+  
+  var pluarFormsScore = ["очко", "очка", "очков"];
+  
+
+  func setTop3PlayersValues() {
+    if (players.indices.contains(0)) {
+      player1View.isHidden = false
+      let player1 = players[0]
+      player1name.text = player1.name
+      player1score.text = pluralForm(number: player1.score, forms: pluarFormsScore)
+      if let playerAvatar = player1.image {
+        player1avatar.image = UIImage(data: playerAvatar as Data)
+      }
+    }
+    else {
+      player1View.isHidden = true
+    }
+    
+    if (players.indices.contains(1)) {
+      player2View.isHidden = false
+      let player2 = players[1]
+      player2name.text = player2.name
+      player2score.text = pluralForm(number: player2.score, forms: pluarFormsScore)
+      if let playerAvatar = player2.image {
+        player2avatar.image = UIImage(data: playerAvatar as Data)
+      }
+    }
+    else {
+      player2View.isHidden = true
+    }
+    
+    if (players.indices.contains(2)) {
+      player3View.isHidden = false
+      print(players[2])
+      let player3 = players[2]
+      player3name.text = player3.name
+      player3score.text = pluralForm(number: player3.score, forms: pluarFormsScore)
+      if let playerAvatar = player3.image {
+        player3avatar.image = UIImage(data: playerAvatar as Data)
+        
+      }
+    }
+    else {
+      player3View.isHidden = true
+    }
+  }
+  
+  func toggleTop3PlayersVisibility() {
+    if (settings[0].is_game_finished) {
+      top3View.isHidden = false
+      restPlayersView.frame = CGRect(x: 143, y: 277, width: 802, height: 433)
+    } else {
+      restPlayersView.frame = CGRect(x: 143, y: 150, width: 802, height: 433)
+      top3View.isHidden = true
+    }
+  }
+  
   override var prefersStatusBarHidden: Bool {
     return true
   }
@@ -105,7 +199,15 @@ class TopViewController: UIViewController, UICollectionViewDataSource, UICollect
   
   // tell the collection view how many cells to make
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return self.players.count
+    let totalCount = players.count
+    if (settings[0].is_game_finished) {
+      let withoutTop3Count = max(0, totalCount - 3)
+      return withoutTop3Count
+    }
+    else {
+      return totalCount
+    }
+    
   }
   
   // make a cell for each cell index path
@@ -114,14 +216,18 @@ class TopViewController: UIViewController, UICollectionViewDataSource, UICollect
     // get a reference to our storyboard cell
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! TopCollectionViewCell
     
+    let indexIdWithoutTop3 = settings[0].is_game_finished ? indexPath.item + 3 : indexPath.item
     // Use the outlet in our custom class to get a reference to the UILabel in the cell
-    let player = self.players[indexPath.item]
-    cell.nameLabel.text = player.name
-    cell.scoreLabel.text = String(player.score)
-    cell.positionLabel.text = String(indexPath.item + 1)
-    if let playerAvatar = player.image {
-      cell.avatarImageView.image = UIImage(data: playerAvatar as Data)
+    if (players.indices.contains(indexIdWithoutTop3)) {
+      let player = self.players[indexIdWithoutTop3]
+      cell.nameLabel.text = player.name
+      cell.scoreLabel.text = pluralForm(number: player.score, forms: pluarFormsScore)
+      cell.positionLabel.text = String(indexIdWithoutTop3 + 1)
+      if let playerAvatar = player.image {
+        cell.avatarImageView.image = UIImage(data: playerAvatar as Data)
+      }
     }
+   
     
     return cell
   }

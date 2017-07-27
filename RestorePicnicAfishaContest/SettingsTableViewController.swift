@@ -25,7 +25,7 @@ class SettingsTableViewController: UITableViewController, UIImagePickerControlle
     print("click save")
     if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
      
-      let session = Int16(sessionTextField.text!)
+      let session = Int32(sessionTextField.text!)
       settings.session = session != nil ? session! : 0
       settings.is_game_finished = gameSwitch.isOn
       
@@ -70,14 +70,8 @@ class SettingsTableViewController: UITableViewController, UIImagePickerControlle
         }
       }
       
-      let session = settings.session
-      let isGameFinished = settings.is_game_finished
-      if (session != nil) {
-        sessionTextField.text = String(session)
-      }
-      if (isGameFinished != nil) {
-        gameSwitch.isOn = isGameFinished
-      }
+      sessionTextField.text = String(settings.session)
+      gameSwitch.isOn = settings.is_game_finished
     }
 
     override func didReceiveMemoryWarning() {
