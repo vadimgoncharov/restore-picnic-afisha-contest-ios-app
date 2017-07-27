@@ -7,7 +7,12 @@
         <attribute name="score" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="session" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
+    <entity name="Settings" representedClassName="SettingsMO" syncable="YES" codeGenerationType="class">
+        <attribute name="is_game_finished" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="session" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
     <elements>
         <element name="Player" positionX="-54" positionY="-9" width="128" height="120"/>
+        <element name="Settings" positionX="-54" positionY="27" width="128" height="75"/>
     </elements>
 </model>

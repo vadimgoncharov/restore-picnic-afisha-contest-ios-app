@@ -7,9 +7,40 @@
 //
 
 import UIKit
+import CoreData
 
-class SettingsTableViewController: UITableViewController {
+class SettingsTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+  @IBOutlet var sessionTextField: UITextField!
+  @IBOutlet var gameSwitch: UISwitch!
+  var settings:SettingsMO!
 
+  @IBAction func didClickCancelButton(withSender sender: AnyObject) {
+    print("click cancel")
+    navigationController?.popViewController(animated: true)
+    
+    dismiss(animated: true, completion: nil)
+  }
+  
+  @IBAction func didClickSaveButton(withSender sender: AnyObject) {
+    print("click save")
+    if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
+     
+      let session = Int16(sessionTextField.text!)
+      settings.session = session != nil ? session! : 0
+      settings.is_game_finished = gameSwitch.isOn
+      
+      print("Saving data to context ...")
+      appDelegate.saveContext()
+      
+    }
+    navigationController?.popViewController(animated: true)
+    dismiss(animated: true, completion: nil)
+  }
+  
+  
+  override var prefersStatusBarHidden: Bool {
+    return true
+  }
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -18,6 +49,35 @@ class SettingsTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+      
+      let fetchResultController: NSFetchedResultsController<SettingsMO>!
+
+      let fetchRequest: NSFetchRequest<SettingsMO> = SettingsMO.fetchRequest()
+      let sortDescriptor = NSSortDescriptor(key: "session", ascending: false)
+      fetchRequest.sortDescriptors = [sortDescriptor]
+      
+      if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
+        let context = appDelegate.persistentContainer.viewContext
+        fetchResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        
+        do {
+          try fetchResultController.performFetch()
+          if let fetchedObjects = fetchResultController.fetchedObjects {
+            settings = fetchedObjects[0]
+          }
+        } catch {
+          print(error)
+        }
+      }
+      
+      let session = settings.session
+      let isGameFinished = settings.is_game_finished
+      if (session != nil) {
+        sessionTextField.text = String(session)
+      }
+      if (isGameFinished != nil) {
+        gameSwitch.isOn = isGameFinished
+      }
     }
 
     override func didReceiveMemoryWarning() {
@@ -27,16 +87,7 @@ class SettingsTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
-    }
-
+  
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)

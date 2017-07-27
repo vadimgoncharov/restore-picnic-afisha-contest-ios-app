@@ -10,8 +10,11 @@ import UIKit
 import CoreData
 
 class PlayerTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
-    var fetchResultController: NSFetchedResultsController<PlayerMO>!
+  var fetchResultController: NSFetchedResultsController<PlayerMO>!
+  var fetchResultControllerSettings: NSFetchedResultsController<SettingsMO>!
+  
     var players:[PlayerMO] = []
+    var settings:[SettingsMO] = []
     @IBAction func unwindToHomeScreen(segue:UIStoryboardSegue) {
     
     }
@@ -23,27 +26,61 @@ class PlayerTableViewController: UITableViewController, NSFetchedResultsControll
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        loadPlayers()
+        loadSettings()
+     
+    }
+  
+  func loadPlayers() {
+    let fetchRequest: NSFetchRequest<PlayerMO> = PlayerMO.fetchRequest()
+    let sortDescriptor = NSSortDescriptor(key: "id", ascending: false)
+    fetchRequest.sortDescriptors = [sortDescriptor]
+    
+    if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
+      let context = appDelegate.persistentContainer.viewContext
+      fetchResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
       
-      let fetchRequest: NSFetchRequest<PlayerMO> = PlayerMO.fetchRequest()
-      let sortDescriptor = NSSortDescriptor(key: "id", ascending: false)
-      fetchRequest.sortDescriptors = [sortDescriptor]
+      fetchResultController.delegate = self
       
-      if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
-        let context = appDelegate.persistentContainer.viewContext
-        fetchResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
-        
-        fetchResultController.delegate = self
-        
-        do {
-          try fetchResultController.performFetch()
-          if let fetchedObjects = fetchResultController.fetchedObjects {
-            players = fetchedObjects
-          }
-        } catch {
-          print(error)
+      do {
+        try fetchResultController.performFetch()
+        if let fetchedObjects = fetchResultController.fetchedObjects {
+          players = fetchedObjects
         }
+      } catch {
+        print(error)
       }
     }
+  }
+  
+  func loadSettings() {
+    let fetchRequest: NSFetchRequest<SettingsMO> = SettingsMO.fetchRequest()
+    let sortDescriptor = NSSortDescriptor(key: "session", ascending: false)
+    fetchRequest.sortDescriptors = [sortDescriptor]
+    
+    if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
+      let context = appDelegate.persistentContainer.viewContext
+      fetchResultControllerSettings = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+      
+//      fetchResultControllerSettings.delegate = self
+      
+      do {
+        try fetchResultControllerSettings.performFetch()
+        if let fetchedObjects = fetchResultControllerSettings.fetchedObjects {
+          settings = fetchedObjects
+          if (settings.count == 0) {
+            let s = SettingsMO(context: context)
+            s.is_game_finished = false
+            s.session = 0
+            settings.append(s)
+            appDelegate.saveContext()
+          }
+        }
+      } catch {
+        print(error)
+      }
+    }
+  }
   
   override var prefersStatusBarHidden: Bool {
     return true
