@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D58EFC6B1F293ED9007CDAC9 /* TopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58EFC6A1F293ED9007CDAC9 /* TopViewController.swift */; };
 		D58EFC6F1F294674007CDAC9 /* TopCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58EFC6E1F294674007CDAC9 /* TopCollectionViewCell.swift */; };
+		D58EFC711F29A38C007CDAC9 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58EFC701F29A38C007CDAC9 /* SettingsTableViewController.swift */; };
 		D5B5B79C1F28E091002A9306 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B5B79B1F28E091002A9306 /* AppDelegate.swift */; };
 		D5B5B79E1F28E091002A9306 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B5B79D1F28E091002A9306 /* ViewController.swift */; };
 		D5B5B7A11F28E091002A9306 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5B5B79F1F28E091002A9306 /* Main.storyboard */; };
@@ -24,6 +25,7 @@
 /* Begin PBXFileReference section */
 		D58EFC6A1F293ED9007CDAC9 /* TopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopViewController.swift; sourceTree = "<group>"; };
 		D58EFC6E1F294674007CDAC9 /* TopCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopCollectionViewCell.swift; sourceTree = "<group>"; };
+		D58EFC701F29A38C007CDAC9 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		D5B5B7981F28E091002A9306 /* RestorePicnicAfishaContest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RestorePicnicAfishaContest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5B5B79B1F28E091002A9306 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D5B5B79D1F28E091002A9306 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 				D5DE28EE1F291590006243A2 /* EditPlayerTableViewController.swift */,
 				D58EFC6A1F293ED9007CDAC9 /* TopViewController.swift */,
 				D58EFC6E1F294674007CDAC9 /* TopCollectionViewCell.swift */,
+				D58EFC701F29A38C007CDAC9 /* SettingsTableViewController.swift */,
 			);
 			path = RestorePicnicAfishaContest;
 			sourceTree = "<group>";
@@ -164,6 +167,7 @@
 				D5B5B79E1F28E091002A9306 /* ViewController.swift in Sources */,
 				D5B5B7B51F28EB27002A9306 /* AddPlayerTableViewController.swift in Sources */,
 				D58EFC6B1F293ED9007CDAC9 /* TopViewController.swift in Sources */,
+				D58EFC711F29A38C007CDAC9 /* SettingsTableViewController.swift in Sources */,
 				D5B5B7B31F28EA29002A9306 /* PlayerTableViewCell.swift in Sources */,
 				D5B5B7B11F28E653002A9306 /* PlayerTableViewController.swift in Sources */,
 				D5B5B79C1F28E091002A9306 /* AppDelegate.swift in Sources */,

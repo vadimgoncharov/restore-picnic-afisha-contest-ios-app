@@ -17,18 +17,6 @@ class EditPlayerTableViewController: UITableViewController, UIImagePickerControl
   @IBOutlet var scoreTextField: UITextField!
   @IBOutlet var sessionTextField: UITextField!
   
-  @IBAction func didClickRemoveButton(withSender sender: AnyObject) {
-    print("remove click")
-    if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
-      let context = appDelegate.persistentContainer.viewContext
-      context.delete(player)
-      print("Removing data ...")
-      appDelegate.saveContext()
-    }
-    navigationController?.popViewController(animated: true)
-    dismiss(animated: true, completion: nil)
-  }
-  
   
   @IBAction func didClickCancelButton(withSender sender: AnyObject) {
     print("click cancel")

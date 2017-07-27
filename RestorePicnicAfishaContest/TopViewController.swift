@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 
 class TopViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+  // https://stackoverflow.com/questions/31735228/how-to-make-a-simple-collection-view-with-swift
   @IBAction func didClickCancelButton(withSender sender: AnyObject) {
     print("click cancel")
     navigationController?.popViewController(animated: true)

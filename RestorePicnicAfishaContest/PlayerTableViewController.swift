@@ -128,6 +128,22 @@ class PlayerTableViewController: UITableViewController, NSFetchedResultsControll
     }
   }
 
+  override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+    
+    // Delete button
+    let deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Delete",handler: { (action, indexPath) -> Void in
+      
+      if let appDelegate = (UIApplication.shared.delegate as? AppDelegate) {
+        let context = appDelegate.persistentContainer.viewContext
+        let playerToDelete = self.fetchResultController.object(at: indexPath)
+        context.delete(playerToDelete)
+        
+        appDelegate.saveContext()
+      }
+    })
+    
+    return [deleteAction]
+  }
     /*
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
