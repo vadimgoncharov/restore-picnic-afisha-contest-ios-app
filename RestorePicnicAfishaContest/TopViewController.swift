@@ -37,6 +37,7 @@ class TopViewController: UIViewController, UICollectionViewDataSource, UICollect
   
   @IBOutlet var top3View: UIView!
   @IBOutlet var restPlayersView: UICollectionView!
+  @IBOutlet var mainView: UIView!
   
   var players:[PlayerMO] = []
   var settings:[SettingsMO] = []
@@ -49,8 +50,14 @@ class TopViewController: UIViewController, UICollectionViewDataSource, UICollect
       loadPlayers()
       setTop3PlayersValues()
       toggleTop3PlayersVisibility()
-
+      
+//      scaleScreen()
     }
+  
+  func scaleScreen() {
+    let scaleFactor = CGFloat(0.42)
+    mainView.transform = CGAffineTransform(scaleX: scaleFactor, y: scaleFactor)
+  }
 
   func loadPlayers() {
     let fetchRequest: NSFetchRequest<PlayerMO> = PlayerMO.fetchRequest()
@@ -202,10 +209,10 @@ class TopViewController: UIViewController, UICollectionViewDataSource, UICollect
     let totalCount = players.count
     if (settings[0].is_game_finished) {
       let withoutTop3Count = max(0, totalCount - 3)
-      return withoutTop3Count
+      return min(15, withoutTop3Count)
     }
     else {
-      return totalCount
+      return min(15, totalCount)
     }
     
   }
