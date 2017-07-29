@@ -55,7 +55,7 @@ class TopViewController: UIViewController, UICollectionViewDataSource, UICollect
     }
   
   func scaleScreen() {
-    let scaleFactor = CGFloat(0.42)
+    let scaleFactor = CGFloat(0.55)
     mainView.transform = CGAffineTransform(scaleX: scaleFactor, y: scaleFactor)
   }
 
