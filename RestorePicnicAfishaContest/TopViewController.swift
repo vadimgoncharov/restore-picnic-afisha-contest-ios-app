@@ -51,7 +51,7 @@ class TopViewController: UIViewController, UICollectionViewDataSource, UICollect
       setTop3PlayersValues()
       toggleTop3PlayersVisibility()
       
-//      scaleScreen()
+      scaleScreen()
     }
   
   func scaleScreen() {
@@ -173,13 +173,16 @@ class TopViewController: UIViewController, UICollectionViewDataSource, UICollect
   }
   
   func toggleTop3PlayersVisibility() {
-    if (settings[0].is_game_finished) {
-      top3View.isHidden = false
-      restPlayersView.frame = CGRect(x: 143, y: 277, width: 802, height: 433)
-    } else {
-      restPlayersView.frame = CGRect(x: 143, y: 150, width: 802, height: 433)
-      top3View.isHidden = true
-    }
+    top3View.isHidden = false
+    return
+    
+//    if (settings[0].is_game_finished) {
+//      top3View.isHidden = false
+//      restPlayersView.frame = CGRect(x: 143, y: 277, width: 802, height: 433)
+//    } else {
+//      restPlayersView.frame = CGRect(x: 143, y: 150, width: 802, height: 433)
+//      top3View.isHidden = true
+//    }
   }
   
   override var prefersStatusBarHidden: Bool {

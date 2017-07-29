@@ -182,9 +182,9 @@ class PlayerTableViewController: UITableViewController, NSFetchedResultsControll
     cell.scoreLabel?.text = pluralForm(number: players[indexRowId].score, forms: pluarFormsScore)
     let session = players[indexRowId].session
     if (session != settings[0].session) {
-      cell.sessionLabel?.text = "Неактивная сессия: \(session)"
+      cell.sessionLabel?.text = "Сессия №\(session) (неактивна)"
     } else {
-      cell.sessionLabel?.text = "Активная сессия: \(session)"
+      cell.sessionLabel?.text = "Сессия №\(session) (активна)"
     }
     return cell
   }
