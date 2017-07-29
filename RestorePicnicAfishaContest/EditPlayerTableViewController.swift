@@ -98,11 +98,19 @@ class EditPlayerTableViewController: UITableViewController, UIImagePickerControl
   }
   
   
+  func resizeImage(_ image: UIImage, toWidth width: CGFloat) -> UIImage? {
+    let canvasSize = CGSize(width: width, height: CGFloat(ceil(width/image.size.width * image.size.height)))
+    UIGraphicsBeginImageContextWithOptions(canvasSize, false, image.scale)
+    defer { UIGraphicsEndImageContext() }
+    image.draw(in: CGRect(origin: .zero, size: canvasSize))
+    return UIGraphicsGetImageFromCurrentImageContext()
+  }
   
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
     
     if let selectedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
-      avatarImageView.image = selectedImage
+      let resizedSelectedImage = resizeImage(selectedImage, toWidth: 120 * 3)
+      avatarImageView.image = resizedSelectedImage
 //      avatarImageView.contentMode = .scaleAspectFill
 //      avatarImageView.clipsToBounds = true
     }
