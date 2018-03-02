@@ -46,6 +46,7 @@ class PlayerTableViewController: UITableViewController, NSFetchedResultsControll
       do {
         try fetchResultController.performFetch()
         if let fetchedObjects = fetchResultController.fetchedObjects {
+          print(fetchedObjects.count);
           players = fetchedObjects
         }
       } catch {

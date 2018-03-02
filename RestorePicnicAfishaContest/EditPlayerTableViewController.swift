@@ -14,6 +14,7 @@ class EditPlayerTableViewController: UITableViewController, UIImagePickerControl
   
   @IBOutlet var avatarImageView: UIImageView!
   @IBOutlet var nameTextField: UITextField!
+  @IBOutlet var phoneTextField: UITextField!
   @IBOutlet var scoreTextField: UITextField!
   @IBOutlet var sessionTextField: UITextField!
   
@@ -32,6 +33,7 @@ class EditPlayerTableViewController: UITableViewController, UIImagePickerControl
       let session = Int32(sessionTextField.text!)
 //      player = PlayerMO(context: appDelegate.persistentContainer.viewContext)
       player.name = nameTextField.text
+      player.phone = phoneTextField.text
       player.score = score != nil ? score! : 0
       player.session = session != nil ? session! : 0
       
@@ -65,6 +67,9 @@ class EditPlayerTableViewController: UITableViewController, UIImagePickerControl
     
     if let name = player.name {
       nameTextField.text = name
+    }
+    if let phone = player.phone {
+      phoneTextField.text = phone
     }
     
     scoreTextField.text = String(Int64(player.score))

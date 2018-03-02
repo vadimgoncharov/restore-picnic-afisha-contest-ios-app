@@ -14,6 +14,7 @@ class AddPlayerTableViewController: UITableViewController, UIImagePickerControll
 
   @IBOutlet var avatarImageView: UIImageView!
   @IBOutlet var nameTextField: UITextField!
+  @IBOutlet var phoneTextField: UITextField!
   @IBOutlet var scoreTextField: UITextField!
   @IBOutlet var sessionTextField: UITextField!
 
@@ -45,6 +46,7 @@ class AddPlayerTableViewController: UITableViewController, UIImagePickerControll
       let session = Int32(sessionTextField.text!)
       player = PlayerMO(context: context)
       player.name = nameTextField.text
+      player.phone = phoneTextField.text
       player.score = score != nil ? score! : 0
       player.session = session != nil ? session! : 0
       player.id = Int32(maxId + 1)
@@ -57,6 +59,7 @@ class AddPlayerTableViewController: UITableViewController, UIImagePickerControll
       }
       
       nameTextField.text = nil
+      phoneTextField.text = nil
       scoreTextField.text = nil
       sessionTextField.text = nil
       avatarImageView.image = nil
@@ -84,6 +87,7 @@ class AddPlayerTableViewController: UITableViewController, UIImagePickerControll
       
       
       nameTextField.text = nil
+      phoneTextField.text = nil
       scoreTextField.text = nil
       sessionTextField.text = nil
       avatarImageView.image = nil
